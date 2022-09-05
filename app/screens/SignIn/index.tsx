@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {ScrollView, View} from 'react-native';
+import {View} from 'react-native';
 import CheckBoxWithText from '../../components/CheckBoxWithText';
 import ErrorMessage from '../../components/ErrorMessage';
 import PageContainer from '../../components/PageContainer';
@@ -17,46 +17,48 @@ const SignIn = ({navigation}: {navigation: any}) => {
 
   return (
     <PageContainer style={styles.container}>
-      <ScrollView scrollEnabled={true}>
-        <StyledTitle style={styles.title}>Sign In</StyledTitle>
-        <View style={styles.form}>
-          <StyledInput
-            value={email}
-            placeholder="Email"
-            style={styles.input}
-            setValue={setEmail}
-          />
-          <StyledInput
-            value={password}
-            style={styles.input}
-            placeholder="Password"
-            setValue={setPassword}
-          />
-          <CheckBoxWithText
-            text="Remember Me"
-            checked={checked}
-            setChecked={setChecked}
-          />
-          <StyledButton
-            title="Sign In"
-            labelStyle={styles.buttonLabel}
-            style={styles.button}
-          />
-          <ErrorMessage
-            message="Account dont exists!"
-            setShow={true}
-            style={styles.errorMessage}
-          />
-        </View>
-        <View style={styles.bottomContainer}>
-          <StyledText>Dont have an Account?</StyledText>
-          <StyledText
-            onPress={() => navigation.navigate('', {})}
-            style={styles.link}>
-            Create new one
-          </StyledText>
-        </View>
-      </ScrollView>
+      <StyledTitle style={styles.title}>Sign In</StyledTitle>
+      <View style={styles.form}>
+        <StyledInput
+          value={email}
+          placeholder="Email"
+          style={styles.input}
+          setValue={setEmail}
+        />
+        <StyledInput
+          value={password}
+          style={styles.input}
+          placeholder="Password"
+          setValue={setPassword}
+          secureTextEntry={true}
+        />
+        <CheckBoxWithText
+          text="Remember Me"
+          checked={checked}
+          setChecked={setChecked}
+          style={styles.checkBox}
+        />
+        <StyledButton
+          title="Sign In"
+          labelStyle={styles.buttonLabel}
+          style={styles.button}
+        />
+        <ErrorMessage
+          message="Account does not exists!"
+          setShow={true}
+          style={styles.errorMessage}
+        />
+      </View>
+      <View style={styles.bottomContainer}>
+        <StyledText style={styles.haveAccountText}>
+          Dont have an Account?
+        </StyledText>
+        <StyledText
+          onPress={() => navigation.navigate('', {})}
+          style={styles.link}>
+          Create new one
+        </StyledText>
+      </View>
     </PageContainer>
   );
 };

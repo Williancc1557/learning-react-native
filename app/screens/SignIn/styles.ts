@@ -1,5 +1,6 @@
-import {Dimensions, StyleSheet} from 'react-native';
+import {StyleSheet} from 'react-native';
 import {Colors} from '../../enums/colors';
+import {screenHeight} from '../../helpers/screen';
 
 export const styles = StyleSheet.create({
   container: {
@@ -7,15 +8,20 @@ export const styles = StyleSheet.create({
   },
 
   title: {
-    marginTop: 50,
+    marginTop: screenHeight * 0.1,
   },
 
   form: {
-    marginTop: 30,
+    marginTop: screenHeight * 0.02,
   },
 
   input: {
-    marginBottom: 20,
+    marginTop: screenHeight * 0.04,
+  },
+
+  checkBox: {
+    marginTop: screenHeight * 0.02,
+    marginBottom: screenHeight * 0.02,
   },
 
   buttonLabel: {
@@ -23,20 +29,24 @@ export const styles = StyleSheet.create({
   },
 
   button: {
-    marginTop: '10%',
+    width: '100%',
   },
 
   errorMessage: {
-    marginTop: 10,
+    marginTop: screenHeight * 0.01,
     textAlign: 'center',
   },
 
   bottomContainer: {
-    justifyContent: 'center',
-    alignItems: 'flex-end',
-    resizeMode: 'contain',
     flexDirection: 'row',
-    height: Dimensions.get('screen').height * 0.3,
+    width: '100%',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: screenHeight * 0.2,
+  },
+
+  haveAccountText: {
+    textAlign: 'center',
   },
 
   link: {

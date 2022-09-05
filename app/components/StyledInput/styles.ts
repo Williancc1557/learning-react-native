@@ -1,5 +1,6 @@
 import {StyleSheet} from 'react-native';
 import {Colors} from '../../enums/colors';
+import {screenHeight} from '../../helpers/screen';
 
 export const styles = StyleSheet.create({
   input: {
@@ -10,5 +11,6 @@ export const styles = StyleSheet.create({
     textDecoration: 'none',
     borderRadius: 25,
     paddingHorizontal: 20,
+    paddingVertical: screenHeight * 0.018,
   },
 });

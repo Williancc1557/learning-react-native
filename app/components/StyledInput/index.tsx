@@ -9,16 +9,18 @@ interface StyledInputParams {
   setValue: React.Dispatch<React.SetStateAction<string>>;
   style?: StyleProp<ViewStyle>;
   placeholderColor?: string;
+  secureTextEntry?: boolean;
 }
 
 const StyledInput = (params: StyledInputParams) => {
   return (
     <TextInput
-      placeholder={params.placeholder || ''}
+      placeholder={params.placeholder}
       placeholderTextColor={params.placeholderColor || Colors.FONT_COLOR}
       value={params.value}
       onChangeText={value => params.setValue(value)}
       style={[styles.input, params.style]}
+      secureTextEntry={params.secureTextEntry}
     />
   );
 };

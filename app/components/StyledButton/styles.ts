@@ -1,5 +1,6 @@
 import {StyleSheet} from 'react-native';
 import {Colors} from '../../enums/colors';
+import {screenHeight} from '../../helpers/screen';
 
 export const styles = StyleSheet.create({
   button: {
@@ -9,8 +10,8 @@ export const styles = StyleSheet.create({
   },
 
   labelStyle: {
+    paddingVertical: screenHeight * 0.0127,
     textTransform: 'none',
-    paddingVertical: 5,
     color: 'black',
   },
 });

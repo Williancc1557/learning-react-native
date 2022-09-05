@@ -11,14 +11,8 @@ interface ErrorMessageParams {
 
 const ErrorMessage = (params: ErrorMessageParams) => {
   return (
-    <StyledText
-      style={[
-        styles.message,
-        params.style,
-        // eslint-disable-next-line react-native/no-inline-styles
-        {display: params.setShow ? 'flex' : 'none'},
-      ]}>
-      {params.message}
+    <StyledText style={[styles.message, params.style]}>
+      {params.setShow ? params.message : ''}
     </StyledText>
   );
 };
