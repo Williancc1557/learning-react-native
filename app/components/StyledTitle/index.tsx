@@ -1,5 +1,6 @@
 import React from 'react';
-import {StyleProp, Text, View, ViewStyle} from 'react-native';
+import {StyleProp, ViewStyle} from 'react-native';
+import {Text} from 'react-native-paper';
 import {styles} from './styles';
 
 interface StyledTitleParams {
