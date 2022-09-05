@@ -3,5 +3,5 @@ export enum Colors {
   'SECOND_COLOR' = '#242846',
   'FONT_COLOR' = '#4f5793',
   'GREEN_COLOR' = '#3af47e',
-  'RED_COLOR' = '#f70000',
+  'RED_COLOR' = '#f42727',
 }

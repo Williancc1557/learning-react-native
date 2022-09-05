@@ -15,7 +15,13 @@ const CheckBoxWithText = (params: CheckBoxWithTextParams) => {
   return (
     <View style={[styles.container, params.style]}>
       <StyledCheckBox checked={params.checked} setChecked={params.setChecked} />
-      <StyledText style={styles.text}>{params.text}</StyledText>
+      <StyledText
+        style={styles.text}
+        onPress={() => {
+          params.setChecked(!params.checked);
+        }}>
+        {params.text}
+      </StyledText>
     </View>
   );
 };

@@ -1,4 +1,4 @@
-import {StyleSheet} from 'react-native';
+import {Dimensions, StyleSheet} from 'react-native';
 import {Colors} from '../../enums/colors';
 
 export const styles = StyleSheet.create({
@@ -34,8 +34,9 @@ export const styles = StyleSheet.create({
   bottomContainer: {
     justifyContent: 'center',
     alignItems: 'flex-end',
-    height: '35%',
+    resizeMode: 'contain',
     flexDirection: 'row',
+    height: Dimensions.get('screen').height * 0.3,
   },
 
   link: {
