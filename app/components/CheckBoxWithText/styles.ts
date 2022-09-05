@@ -3,8 +3,11 @@ import {Colors} from '../../enums/colors';
 
 export const styles = StyleSheet.create({
   container: {
-    marginTop: 'auto',
-    backgroundColor: Colors.PRIMARY_COLOR,
-    paddingHorizontal: '6%',
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  text: {
+    textAlign: 'center',
+    color: Colors.FONT_COLOR,
   },
 });

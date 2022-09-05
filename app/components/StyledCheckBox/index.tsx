@@ -1,6 +1,7 @@
 import React from 'react';
 import {StyleProp, ViewStyle} from 'react-native';
 import {Checkbox} from 'react-native-paper';
+import {Colors} from '../../enums/colors';
 
 interface StyledCheckBoxParams {
   checked: boolean;
@@ -15,6 +16,7 @@ const StyledCheckBox = (params: StyledCheckBoxParams) => {
         params.setChecked(!params.checked);
       }}
       status={params.checked ? 'checked' : 'unchecked'}
+      color={Colors.GREEN_COLOR}
     />
   );
 };

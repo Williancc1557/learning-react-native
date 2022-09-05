@@ -9,9 +9,17 @@
  */
 import React from 'react';
 import NavigationStack from './navigation/NavigationStack';
+import {Provider as PaperProvider} from 'react-native-paper';
+import {SafeAreaProvider} from 'react-native-safe-area-context';
 
-function App() {
-  return <NavigationStack />;
-}
+const App = () => {
+  return (
+    <PaperProvider>
+      <SafeAreaProvider>
+        <NavigationStack />
+      </SafeAreaProvider>
+    </PaperProvider>
+  );
+};
 
 export default App;

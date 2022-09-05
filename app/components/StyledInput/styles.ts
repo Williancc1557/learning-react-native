@@ -1,10 +1,11 @@
 import {StyleSheet} from 'react-native';
+import {Colors} from '../../enums/colors';
 
 export const styles = StyleSheet.create({
   input: {
     width: '100%',
-    backgroundColor: '#242846',
-    color: '#4f5793',
+    backgroundColor: Colors.SECOND_COLOR,
+    color: 'white',
     fontSize: 16,
     textDecoration: 'none',
     borderRadius: 25,
