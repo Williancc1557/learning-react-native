@@ -1,13 +1,9 @@
 import {StyleSheet} from 'react-native';
 
 export const styles = StyleSheet.create({
-  container: {
-    height: '100%',
-  },
-
   title: {
-    marginTop: 30,
+    fontSize: 27,
+    color: 'white',
+    fontWeight: '700',
   },
-
-  form: {},
 });
