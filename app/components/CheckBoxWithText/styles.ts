@@ -9,5 +9,6 @@ export const styles = StyleSheet.create({
   text: {
     textAlign: 'center',
     color: Colors.FONT_COLOR,
+    paddingVertical: 7,
   },
 });
