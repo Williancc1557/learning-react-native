@@ -44,7 +44,7 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
     flexBasis: 'auto',
     flexGrow: 1,
-    paddingBottom: screenHeight * 0.09,
+    paddingBottom: screenHeight * 0.04,
   },
 
   haveAccountText: {
@@ -53,6 +53,5 @@ export const styles = StyleSheet.create({
 
   link: {
     color: Colors.GREEN_COLOR,
-    paddingLeft: 5,
   },
 });

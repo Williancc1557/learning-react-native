@@ -4,7 +4,11 @@ import {screenHeight} from '../../helpers/screen';
 
 export const styles = StyleSheet.create({
   container: {
-    height: '100%',
+    height: screenHeight * 1,
+  },
+
+  scroll: {
+    height: 'auto',
   },
 
   title: {
@@ -12,11 +16,11 @@ export const styles = StyleSheet.create({
   },
 
   form: {
-    marginTop: screenHeight * 0.02,
+    marginTop: screenHeight * 0.03,
   },
 
   input: {
-    marginTop: screenHeight * 0.04,
+    marginTop: screenHeight * 0.03,
   },
 
   checkBox: {
@@ -44,7 +48,7 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
     flexBasis: 'auto',
     flexGrow: 1,
-    paddingBottom: screenHeight * 0.09,
+    paddingBottom: screenHeight * 0.07,
   },
 
   haveAccountText: {

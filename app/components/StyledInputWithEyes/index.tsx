@@ -1,12 +1,12 @@
 import React from 'react';
 import {StyleProp, View, ViewStyle} from 'react-native';
-import {List} from 'react-native-paper';
-import {Colors} from '../../enums/colors';
+import {IconButton} from 'react-native-paper';
 import StyledInput from '../StyledInput';
 import {styles} from './styles';
 
-interface StyledInputWithValidatorParams {
-  validate: boolean;
+interface StyledInputWithEyesParams {
+  eyes: boolean;
+  setEyes: React.Dispatch<React.SetStateAction<boolean>>;
   style?: StyleProp<ViewStyle>;
   value: string;
   placeholder?: string;
@@ -14,11 +14,10 @@ interface StyledInputWithValidatorParams {
   onChangeText?: (value: string) => void;
 }
 
-const StyledInputWithValidator = (params: StyledInputWithValidatorParams) => {
-  const {validate} = params;
+const StyledInputWithEyes = (params: StyledInputWithEyesParams) => {
+  const {eyes} = params;
 
-  const icon = validate ? 'check' : 'close';
-  const color = validate ? Colors.GREEN_COLOR : Colors.RED_COLOR;
+  const icon = eyes ? 'eye' : 'eye-off';
 
   return (
     <View style={[styles.container, params.style]}>
@@ -27,11 +26,15 @@ const StyledInputWithValidator = (params: StyledInputWithValidatorParams) => {
         onChangeText={params.onChangeText}
         value={params.value}
         placeholder={params.placeholder}
-        secureTextEntry={params.secureTextEntry}
+        secureTextEntry={icon === 'eye' ? false : true}
       />
-      <List.Icon icon={icon} color={color} style={styles.icon} />
+      <IconButton
+        onPress={() => params.setEyes(!params.eyes)}
+        icon={icon}
+        style={styles.icon}
+      />
     </View>
   );
 };
 
-export default StyledInputWithValidator;
+export default StyledInputWithEyes;
