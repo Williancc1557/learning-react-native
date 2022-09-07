@@ -8,7 +8,7 @@ interface CheckBoxWithTextParams {
   checked: boolean;
   setChecked: React.Dispatch<React.SetStateAction<boolean>>;
   style?: StyleProp<ViewStyle>;
-  text: string;
+  children: any;
 }
 
 const CheckBoxWithText = (params: CheckBoxWithTextParams) => {
@@ -20,7 +20,7 @@ const CheckBoxWithText = (params: CheckBoxWithTextParams) => {
         onPress={() => {
           params.setChecked(!params.checked);
         }}>
-        {params.text}
+        {params.children}
       </StyledText>
     </View>
   );

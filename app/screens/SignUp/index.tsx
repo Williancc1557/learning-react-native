@@ -11,57 +11,66 @@ import StyledTitle from '../../components/StyledTitle';
 import {maks} from '../../enums/masks';
 import {styles} from './styles';
 
-const SignIn = ({navigation}: {navigation: any}) => {
-  /* navigation.navigate('', {name: 'test'}); */
+const SignUp = ({navigation}: {navigation: any}) => {
   const [checked, setChecked] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [passwordAgain, setPasswordAgain] = useState('');
 
   return (
     <PageContainer style={styles.container}>
-      <StyledTitle style={styles.title}>Sign In</StyledTitle>
+      <StyledTitle style={styles.title}>Sign Up</StyledTitle>
       <View style={styles.form}>
         <StyledInputWithValidator
-          validate={maks.email}
+          value={email}
           placeholder="Email"
           style={styles.input}
-          value={email}
           setValue={setEmail}
+          validate={maks.email}
         />
         <StyledInput
           value={password}
           style={styles.input}
           placeholder="Password"
-          onChangeText={passwordChanged => setPassword(passwordChanged)}
+          onChangeText={changedValue => setPassword(changedValue)}
+          secureTextEntry={true}
+        />
+
+        <StyledInput
+          value={passwordAgain}
+          style={styles.input}
+          placeholder="Password Again"
+          onChangeText={changedValue => setPasswordAgain(changedValue)}
           secureTextEntry={true}
         />
         <CheckBoxWithText
           checked={checked}
           setChecked={setChecked}
           style={styles.checkBox}>
-          Remember Me
+          By signin up you accept the{' '}
+          <StyledText style={styles.link}>Terms of Willian</StyledText>
         </CheckBoxWithText>
         <StyledButton
-          title="Sign In"
+          title="Sign Up"
           labelStyle={styles.buttonLabel}
           style={styles.button}
         />
         <ErrorMessage setShow={true} style={styles.errorMessage}>
-          Account does not exists!
+          Account already exists!
         </ErrorMessage>
       </View>
       <View style={styles.bottomContainer}>
         <StyledText style={styles.haveAccountText}>
-          Dont have an Account?
+          Already have an Account?{' '}
         </StyledText>
         <StyledText
-          onPress={() => navigation.navigate('SignUp', {})}
+          onPress={() => navigation.navigate('SignIn', {})}
           style={styles.link}>
-          Create new one
+          Sign In
         </StyledText>
       </View>
     </PageContainer>
   );
 };
 
-export default SignIn;
+export default SignUp;

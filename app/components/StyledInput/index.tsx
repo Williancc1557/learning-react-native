@@ -6,7 +6,7 @@ import {Colors} from '../../enums/colors';
 interface StyledInputParams {
   placeholder?: string;
   value: string;
-  setValue: React.Dispatch<React.SetStateAction<string>>;
+  onChangeText?: (text: string) => void;
   style?: StyleProp<ViewStyle>;
   placeholderColor?: string;
   secureTextEntry?: boolean;
@@ -18,7 +18,7 @@ const StyledInput = (params: StyledInputParams) => {
       placeholder={params.placeholder}
       placeholderTextColor={params.placeholderColor || Colors.FONT_COLOR}
       value={params.value}
-      onChangeText={value => params.setValue(value)}
+      onChangeText={params.onChangeText}
       style={[styles.input, params.style]}
       secureTextEntry={params.secureTextEntry}
     />

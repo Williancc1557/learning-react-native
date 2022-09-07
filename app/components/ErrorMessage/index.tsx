@@ -4,7 +4,7 @@ import StyledText from '../StyledText';
 import {styles} from './styles';
 
 interface ErrorMessageParams {
-  message: string;
+  children: any;
   style?: StyleProp<TextStyle>;
   setShow: boolean;
 }
@@ -12,7 +12,7 @@ interface ErrorMessageParams {
 const ErrorMessage = (params: ErrorMessageParams) => {
   return (
     <StyledText style={[styles.message, params.style]}>
-      {params.setShow ? params.message : ''}
+      {params.setShow ? params.children : ''}
     </StyledText>
   );
 };
