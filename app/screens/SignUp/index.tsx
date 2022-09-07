@@ -23,7 +23,7 @@ const SignUp = ({navigation}: {navigation: any}) => {
       : false;
 
   return (
-    <ScrollView style={styles.scroll}>
+    <ScrollView style={styles.scroll} showsVerticalScrollIndicator={false}>
       <PageContainer style={styles.container}>
         <StyledTitle style={styles.title}>Sign Up</StyledTitle>
         <View style={styles.form}>
