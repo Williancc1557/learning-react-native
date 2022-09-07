@@ -40,9 +40,11 @@ export const styles = StyleSheet.create({
   bottomContainer: {
     flexDirection: 'row',
     width: '100%',
-    alignItems: 'center',
+    alignItems: 'flex-end',
     justifyContent: 'center',
-    marginTop: screenHeight * 0.1,
+    flexBasis: 'auto',
+    flexGrow: 1,
+    paddingBottom: screenHeight * 0.09,
   },
 
   haveAccountText: {
