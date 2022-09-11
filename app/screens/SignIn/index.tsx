@@ -15,15 +15,10 @@ import {rememberAccount, updateTokens} from '../../services/userSlice';
 import {styles} from './styles';
 
 const SignIn = ({navigation}: {navigation: any}) => {
-  const [checked, setChecked] = useState(false);
-
-  const autoComplete = useSelector((state: any) => state);
-  const [email, setEmail] = useState(
-    autoComplete.user.rememberAccount.email || '',
-  );
-  const [password, setPassword] = useState(
-    autoComplete.user.rememberAccount.password || '',
-  );
+  const autoComplete = useSelector((state: any) => state.user.rememberAccount);
+  const [checked, setChecked] = useState(autoComplete.enabled);
+  const [email, setEmail] = useState(autoComplete.email || '');
+  const [password, setPassword] = useState(autoComplete.password || '');
   const [eyes, setEyes] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
 
@@ -71,10 +66,11 @@ const SignIn = ({navigation}: {navigation: any}) => {
         rememberAccount({
           email,
           password,
+          enabled: checked,
         }),
       );
     } else {
-      dispatch(rememberAccount({email: null, password: null}));
+      dispatch(rememberAccount({email: null, password: null, enabled: false}));
     }
   };
 

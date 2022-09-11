@@ -11,6 +11,7 @@ export const userSlice = createSlice({
     rememberAccount: {
       email: null,
       password: null,
+      enabled: false,
     },
   },
   reducers: {
