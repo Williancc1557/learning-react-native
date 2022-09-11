@@ -41,6 +41,9 @@ const SignUp = ({navigation}: {navigation: any}) => {
       ? password === passwordAgain
       : false;
 
+  const isDisabledSubmitButton =
+    password !== passwordAgain || !checked || password === '';
+
   const submit = async () => {
     if (!checkFields()) {
       return showError('Please, complete all inputs');
@@ -52,8 +55,16 @@ const SignUp = ({navigation}: {navigation: any}) => {
       password,
     });
 
-    if (statusCode !== 200) {
+    if (statusCode === 409) {
+      return showError('Account already exists');
+    }
+
+    if (statusCode === 400) {
       return showError("We can't create this account");
+    }
+
+    if (statusCode === 500) {
+      return showError('Internal server error');
     }
 
     await AsyncStorage.multiSet([
@@ -118,11 +129,10 @@ const SignUp = ({navigation}: {navigation: any}) => {
             labelStyle={styles.buttonLabel}
             style={[
               styles.button,
-              password !== passwordAgain || !checked || password === ''
-                ? {backgroundColor: '#3b6048'}
-                : {},
+              // eslint-disable-next-line react-native/no-inline-styles
+              isDisabledSubmitButton ? {backgroundColor: '#3b6048'} : {},
             ]}
-            disabled={password !== passwordAgain || !checked || password === ''}
+            disabled={isDisabledSubmitButton}
             onpress={() => submit()}
           />
           <ErrorMessage setShow={true} style={styles.errorMessage}>

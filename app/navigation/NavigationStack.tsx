@@ -25,15 +25,11 @@ const NavigationStack = () => {
   });
 
   const store = useSelector((state: any) => state);
+  const {refreshToken} = store.user.tokens;
 
   return (
     <NavigationContainer>
-      {!store.user.tokens.refreshToken ||
-      store.user.tokens.refreshToken === '' ? (
-        <Unauthorized />
-      ) : (
-        <Authorized />
-      )}
+      {!refreshToken ? <Unauthorized /> : <Authorized />}
     </NavigationContainer>
   );
 };
