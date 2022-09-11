@@ -7,14 +7,23 @@ export const userSlice = createSlice({
       accessToken: null,
       refreshToken: null,
     },
+
+    rememberAccount: {
+      email: null,
+      password: null,
+    },
   },
   reducers: {
     updateTokens: (state, value) => {
       state.tokens = {...state.tokens, ...value.payload};
     },
+
+    rememberAccount: (state, value) => {
+      state.rememberAccount = {...state.rememberAccount, ...value.payload};
+    },
   },
 });
 
-export const {updateTokens} = userSlice.actions;
+export const {updateTokens, rememberAccount} = userSlice.actions;
 
 export default userSlice.reducer;

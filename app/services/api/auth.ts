@@ -35,3 +35,36 @@ export const saveUser = async (
     };
   }
 };
+
+export interface SignInInput {
+  email: string;
+  password: string;
+}
+
+export interface SignInOutput {
+  statusCode: number;
+  body: {
+    refreshToken: string;
+  };
+}
+
+export const signIn = async (input: SignInInput): Promise<SignInOutput> => {
+  try {
+    const response = await axios.post(
+      'http://127.0.1.1:8080/api/auth/sign-in',
+      input,
+    );
+
+    return {
+      body: {
+        refreshToken: response.data.refreshToken,
+      },
+      statusCode: response.status,
+    };
+  } catch (err: any) {
+    return {
+      statusCode: err.response.status,
+      body: err.response.data,
+    };
+  }
+};

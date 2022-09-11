@@ -1,5 +1,7 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, {useState} from 'react';
 import {View} from 'react-native';
+import {useDispatch, useSelector} from 'react-redux';
 import CheckBoxWithText from '../../components/CheckBoxWithText';
 import ErrorMessage from '../../components/ErrorMessage';
 import PageContainer from '../../components/PageContainer';
@@ -8,13 +10,73 @@ import StyledInputWithEyes from '../../components/StyledInputWithEyes';
 import StyledInputWithValidator from '../../components/StyledInputWithValidation';
 import StyledText from '../../components/StyledText';
 import StyledTitle from '../../components/StyledTitle';
+import {signIn} from '../../services/api/auth';
+import {rememberAccount, updateTokens} from '../../services/userSlice';
 import {styles} from './styles';
 
 const SignIn = ({navigation}: {navigation: any}) => {
   const [checked, setChecked] = useState(false);
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+
+  const autoComplete = useSelector((state: any) => state);
+  const [email, setEmail] = useState(
+    autoComplete.user.rememberAccount.email || '',
+  );
+  const [password, setPassword] = useState(
+    autoComplete.user.rememberAccount.password || '',
+  );
   const [eyes, setEyes] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
+
+  const showError = (nameError: string) => {
+    setErrorMessage(nameError);
+  };
+
+  const checkFields = () => {
+    for (const field of [email, password]) {
+      if (field === '') {
+        return false;
+      }
+    }
+    return true;
+  };
+
+  const dispatch = useDispatch();
+
+  const submit = async () => {
+    if (!checkFields()) {
+      return showError('Please, complete all inputs');
+    }
+
+    const {body, statusCode} = await signIn({
+      email,
+      password,
+    });
+
+    if (statusCode === 400) {
+      return showError("We don't can find this account");
+    }
+
+    if (statusCode === 500) {
+      return showError('Internal server error');
+    }
+
+    await AsyncStorage.setItem('refreshToken', body.refreshToken);
+    if (checked) {
+      dispatch(
+        updateTokens({
+          refreshToken: body.refreshToken,
+        }),
+      );
+      dispatch(
+        rememberAccount({
+          email,
+          password,
+        }),
+      );
+    } else {
+      dispatch(rememberAccount({email: null, password: null}));
+    }
+  };
 
   return (
     <PageContainer style={styles.container}>
@@ -48,9 +110,10 @@ const SignIn = ({navigation}: {navigation: any}) => {
           title="Sign In"
           labelStyle={styles.buttonLabel}
           style={styles.button}
+          onpress={() => submit()}
         />
         <ErrorMessage setShow={true} style={styles.errorMessage}>
-          Account does not exists!
+          {errorMessage}
         </ErrorMessage>
       </View>
       <View style={styles.bottomContainer}>
