@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import {View} from 'react-native';
+import {useSelector} from 'react-redux';
 import CheckBoxWithText from '../../components/CheckBoxWithText';
 import ErrorMessage from '../../components/ErrorMessage';
 import PageContainer from '../../components/PageContainer';
@@ -11,11 +12,12 @@ import StyledTitle from '../../components/StyledTitle';
 import {styles} from './styles';
 
 const SignIn = ({navigation}: {navigation: any}) => {
-  /* navigation.navigate('', {name: 'test'}); */
   const [checked, setChecked] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [eyes, setEyes] = useState(false);
+
+  useSelector((state: any) => console.log(state.user));
 
   return (
     <PageContainer style={styles.container}>

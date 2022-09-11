@@ -11,14 +11,18 @@ import React from 'react';
 import NavigationStack from './navigation/NavigationStack';
 import {Provider as PaperProvider} from 'react-native-paper';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
+import {Provider} from 'react-redux';
+import {store} from './services/store';
 
 const App = () => {
   return (
-    <PaperProvider>
-      <SafeAreaProvider>
-        <NavigationStack />
-      </SafeAreaProvider>
-    </PaperProvider>
+    <Provider store={store}>
+      <PaperProvider>
+        <SafeAreaProvider>
+          <NavigationStack />
+        </SafeAreaProvider>
+      </PaperProvider>
+    </Provider>
   );
 };
 

@@ -1,5 +1,7 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, {useState} from 'react';
 import {ScrollView, View} from 'react-native';
+import {useDispatch} from 'react-redux';
 import CheckBoxWithText from '../../components/CheckBoxWithText';
 import ErrorMessage from '../../components/ErrorMessage';
 import PageContainer from '../../components/PageContainer';
@@ -8,6 +10,8 @@ import StyledInput from '../../components/StyledInput';
 import StyledInputWithValidator from '../../components/StyledInputWithValidation';
 import StyledText from '../../components/StyledText';
 import StyledTitle from '../../components/StyledTitle';
+import {saveUser} from '../../services/api/auth';
+import {updateAccessToken, updateRefreshToken} from '../../services/userSlice';
 import {styles} from './styles';
 
 const SignUp = ({navigation}: {navigation: any}) => {
@@ -16,6 +20,22 @@ const SignUp = ({navigation}: {navigation: any}) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [passwordAgain, setPasswordAgain] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
+  const dispatch = useDispatch();
+
+  const showError = (nameError: string) => {
+    setErrorMessage(nameError);
+  };
+
+  const checkFields = () => {
+    for (const field of [checked, name, email, password]) {
+      if (field === '') {
+        return false;
+      }
+    }
+
+    return true;
+  };
 
   const isValidComparation =
     password !== '' || passwordAgain !== ''
@@ -69,10 +89,39 @@ const SignUp = ({navigation}: {navigation: any}) => {
           <StyledButton
             title="Sign Up"
             labelStyle={styles.buttonLabel}
-            style={styles.button}
+            style={[
+              styles.button,
+              password !== passwordAgain || !checked
+                ? {backgroundColor: '#3b6048'}
+                : {},
+            ]}
+            disabled={password !== passwordAgain}
+            onpress={async () => {
+              if (!checkFields()) {
+                return showError('Please, complete all inputs');
+              }
+
+              const {body, statusCode} = await saveUser({
+                email,
+                name,
+                password,
+              });
+
+              if (statusCode !== 200) {
+                return showError("We can't create this account");
+              }
+
+              await AsyncStorage.multiSet([
+                ['accessToken', body.accessToken],
+                ['refreshToken', body.refreshToken],
+              ]);
+
+              dispatch(updateAccessToken(body.accessToken));
+              dispatch(updateRefreshToken(body.refreshToken));
+            }}
           />
           <ErrorMessage setShow={true} style={styles.errorMessage}>
-            Account already exists!
+            {errorMessage}
           </ErrorMessage>
         </View>
         <View style={styles.bottomContainer}>

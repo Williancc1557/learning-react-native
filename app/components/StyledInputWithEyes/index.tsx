@@ -18,6 +18,7 @@ const StyledInputWithEyes = (params: StyledInputWithEyesParams) => {
   const {eyes} = params;
 
   const icon = eyes ? 'eye' : 'eye-off';
+  const color = eyes ? '#adadad' : undefined;
 
   return (
     <View style={[styles.container, params.style]}>
@@ -32,6 +33,7 @@ const StyledInputWithEyes = (params: StyledInputWithEyesParams) => {
         onPress={() => params.setEyes(!params.eyes)}
         icon={icon}
         style={styles.icon}
+        iconColor={color}
       />
     </View>
   );

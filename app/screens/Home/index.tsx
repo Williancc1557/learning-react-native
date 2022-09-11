@@ -1,11 +1,21 @@
-import {Text} from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import React from 'react';
+import {useDispatch} from 'react-redux';
 import PageContainer from '../../components/PageContainer';
+import StyledButton from '../../components/StyledButton';
+import {updateAccessToken, updateRefreshToken} from '../../services/userSlice';
 
-const Home = () => {
+const Home = ({navigation}) => {
+  const dispatch = useDispatch();
   return (
     <PageContainer>
-      <Text>aaa</Text>
+      <StyledButton
+        onpress={async () => {
+          await AsyncStorage.multiRemove(['refreshToken', 'accessToken']);
+          dispatch(updateAccessToken(null));
+          dispatch(updateRefreshToken(null));
+        }}
+      />
     </PageContainer>
   );
 };

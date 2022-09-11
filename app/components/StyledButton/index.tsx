@@ -8,6 +8,8 @@ interface StyledButtonParams {
   style?: StyleProp<ViewStyle>;
   color?: string;
   labelStyle?: StyleProp<TextStyle>;
+  onpress?: () => void;
+  disabled?: boolean;
 }
 
 const StyledButton = (params: StyledButtonParams) => {
@@ -15,7 +17,9 @@ const StyledButton = (params: StyledButtonParams) => {
     <Button
       color={params.color || '#000000'}
       style={[styles.button, params.style]}
-      labelStyle={[styles.labelStyle, params.labelStyle]}>
+      labelStyle={[styles.labelStyle, params.labelStyle]}
+      onPress={params.onpress}
+      disabled={params.disabled}>
       {params.title || ''}
     </Button>
   );

@@ -1,49 +1,58 @@
-import {NavigationContainer} from '@react-navigation/native';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import SignIn from '../screens/SignIn';
-import React, {useEffect, useState} from 'react';
 import SignUp from '../screens/SignUp';
-import {validateAccessToken} from '../services/ValidateTokens';
 import Home from '../screens/Home';
+import {useDispatch, useSelector} from 'react-redux';
+import {useEffect} from 'react';
+import {updateAccessToken, updateRefreshToken} from '../services/userSlice';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import React from 'react';
+import {NavigationContainer} from '@react-navigation/native';
 
 const Stack = createNativeStackNavigator();
 
 const NavigationStack = () => {
-  const [authorized, setAuthorized] = useState(false);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    async function getAuthorization() {
-      setAuthorized(await validateAccessToken());
+    async function getAsyncStorageTokens() {
+      dispatch(updateAccessToken(await AsyncStorage.getItem('accessToken')));
+      dispatch(updateRefreshToken(await AsyncStorage.getItem('refreshToken')));
     }
-
-    getAuthorization();
+    getAsyncStorageTokens();
   });
 
-  return authorized ? <Authorized /> : <Unauthorized />;
+  const store = useSelector((state: any) => state);
+
+  return (
+    <NavigationContainer>
+      {!store.user.refreshToken || store.user.refreshToken === '' ? (
+        <Unauthorized />
+      ) : (
+        <Authorized />
+      )}
+    </NavigationContainer>
+  );
 };
 
 const Unauthorized = () => {
   return (
-    <NavigationContainer>
-      <Stack.Navigator
-        screenOptions={{headerShown: false}}
-        initialRouteName="SignIn">
-        <Stack.Screen name="SignIn" component={SignIn} />
-        <Stack.Screen name="SignUp" component={SignUp} />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <Stack.Navigator
+      screenOptions={{headerShown: false}}
+      initialRouteName="SignIn">
+      <Stack.Screen name="SignIn" component={SignIn} />
+      <Stack.Screen name="SignUp" component={SignUp} />
+    </Stack.Navigator>
   );
 };
 
 const Authorized = () => {
   return (
-    <NavigationContainer>
-      <Stack.Navigator
-        screenOptions={{headerShown: false}}
-        initialRouteName="Home">
-        <Stack.Screen name="Home" component={Home} />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <Stack.Navigator
+      screenOptions={{headerShown: false}}
+      initialRouteName="Home">
+      <Stack.Screen name="Home" component={Home} />
+    </Stack.Navigator>
   );
 };
 
