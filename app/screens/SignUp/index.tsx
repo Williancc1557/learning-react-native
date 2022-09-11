@@ -33,7 +33,6 @@ const SignUp = ({navigation}: {navigation: any}) => {
         return false;
       }
     }
-
     return true;
   };
 
@@ -41,6 +40,30 @@ const SignUp = ({navigation}: {navigation: any}) => {
     password !== '' || passwordAgain !== ''
       ? password === passwordAgain
       : false;
+
+  const submit = async () => {
+    if (!checkFields()) {
+      return showError('Please, complete all inputs');
+    }
+
+    const {body, statusCode} = await saveUser({
+      email,
+      name,
+      password,
+    });
+
+    if (statusCode !== 200) {
+      return showError("We can't create this account");
+    }
+
+    await AsyncStorage.multiSet([
+      ['accessToken', body.accessToken],
+      ['refreshToken', body.refreshToken],
+    ]);
+
+    dispatch(updateAccessToken(body.accessToken));
+    dispatch(updateRefreshToken(body.refreshToken));
+  };
 
   return (
     <ScrollView style={styles.scroll} showsVerticalScrollIndicator={false}>
@@ -91,34 +114,12 @@ const SignUp = ({navigation}: {navigation: any}) => {
             labelStyle={styles.buttonLabel}
             style={[
               styles.button,
-              password !== passwordAgain || !checked
+              password !== passwordAgain || !checked || password === ''
                 ? {backgroundColor: '#3b6048'}
                 : {},
             ]}
-            disabled={password !== passwordAgain}
-            onpress={async () => {
-              if (!checkFields()) {
-                return showError('Please, complete all inputs');
-              }
-
-              const {body, statusCode} = await saveUser({
-                email,
-                name,
-                password,
-              });
-
-              if (statusCode !== 200) {
-                return showError("We can't create this account");
-              }
-
-              await AsyncStorage.multiSet([
-                ['accessToken', body.accessToken],
-                ['refreshToken', body.refreshToken],
-              ]);
-
-              dispatch(updateAccessToken(body.accessToken));
-              dispatch(updateRefreshToken(body.refreshToken));
-            }}
+            disabled={password !== passwordAgain || !checked || password === ''}
+            onpress={() => submit()}
           />
           <ErrorMessage setShow={true} style={styles.errorMessage}>
             {errorMessage}

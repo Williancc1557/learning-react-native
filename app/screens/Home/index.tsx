@@ -5,7 +5,7 @@ import PageContainer from '../../components/PageContainer';
 import StyledButton from '../../components/StyledButton';
 import {updateAccessToken, updateRefreshToken} from '../../services/userSlice';
 
-const Home = ({navigation}) => {
+const Home = () => {
   const dispatch = useDispatch();
   return (
     <PageContainer>
