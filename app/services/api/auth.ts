@@ -23,7 +23,6 @@ export const saveUser = async (
       'http://127.0.1.1:8080/api/auth/sign-up',
       input,
     );
-    console.log(response.status);
 
     return {
       statusCode: response.status,

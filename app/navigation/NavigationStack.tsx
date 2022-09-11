@@ -3,7 +3,7 @@ import SignUp from '../screens/SignUp';
 import Home from '../screens/Home';
 import {useDispatch, useSelector} from 'react-redux';
 import {useEffect} from 'react';
-import {updateAccessToken, updateRefreshToken} from '../services/userSlice';
+import {updateTokens} from '../services/userSlice';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import React from 'react';
@@ -16,9 +16,11 @@ const NavigationStack = () => {
 
   useEffect(() => {
     async function getAsyncStorageTokens() {
-      dispatch(updateAccessToken(await AsyncStorage.getItem('accessToken')));
-      dispatch(updateRefreshToken(await AsyncStorage.getItem('refreshToken')));
+      const refreshToken = await AsyncStorage.getItem('refreshToken');
+      const accessToken = await AsyncStorage.getItem('accessToken');
+      dispatch(updateTokens({refreshToken, accessToken}));
     }
+
     getAsyncStorageTokens();
   });
 
@@ -26,7 +28,8 @@ const NavigationStack = () => {
 
   return (
     <NavigationContainer>
-      {!store.user.refreshToken || store.user.refreshToken === '' ? (
+      {!store.user.tokens.refreshToken ||
+      store.user.tokens.refreshToken === '' ? (
         <Unauthorized />
       ) : (
         <Authorized />

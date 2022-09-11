@@ -18,7 +18,7 @@ const StyledButton = (params: StyledButtonParams) => {
       color={params.color || '#000000'}
       style={[styles.button, params.style]}
       labelStyle={[styles.labelStyle, params.labelStyle]}
-      onPress={params.disabled ? params.onpress : () => null}
+      onPress={params.onpress}
       disabled={params.disabled}>
       {params.title || ''}
     </Button>

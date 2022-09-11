@@ -11,7 +11,7 @@ import StyledInputWithValidator from '../../components/StyledInputWithValidation
 import StyledText from '../../components/StyledText';
 import StyledTitle from '../../components/StyledTitle';
 import {saveUser} from '../../services/api/auth';
-import {updateAccessToken, updateRefreshToken} from '../../services/userSlice';
+import {updateTokens} from '../../services/userSlice';
 import {styles} from './styles';
 
 const SignUp = ({navigation}: {navigation: any}) => {
@@ -61,8 +61,12 @@ const SignUp = ({navigation}: {navigation: any}) => {
       ['refreshToken', body.refreshToken],
     ]);
 
-    dispatch(updateAccessToken(body.accessToken));
-    dispatch(updateRefreshToken(body.refreshToken));
+    dispatch(
+      updateTokens({
+        refreshToken: body.accessToken,
+        accessToken: body.refreshToken,
+      }),
+    );
   };
 
   return (
