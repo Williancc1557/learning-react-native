@@ -50,10 +50,14 @@ export interface SignInOutput {
 
 export const signIn = async (input: SignInInput): Promise<SignInOutput> => {
   try {
+    console.log('executando');
+
     const response = await axios.post(
       'http://127.0.1.1:8080/api/auth/sign-in',
       input,
     );
+
+    console.log(response);
 
     return {
       body: {

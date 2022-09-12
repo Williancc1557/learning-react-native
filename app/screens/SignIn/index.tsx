@@ -47,6 +47,8 @@ const SignIn = ({navigation}: {navigation: any}) => {
       password,
     });
 
+    console.log(body);
+
     if (statusCode === 400) {
       return showError("We don't can find this account");
     }
@@ -55,13 +57,14 @@ const SignIn = ({navigation}: {navigation: any}) => {
       return showError('Internal server error');
     }
 
+    dispatch(
+      updateTokens({
+        refreshToken: body.refreshToken,
+      }),
+    );
+
     await AsyncStorage.setItem('refreshToken', body.refreshToken);
     if (checked) {
-      dispatch(
-        updateTokens({
-          refreshToken: body.refreshToken,
-        }),
-      );
       dispatch(
         rememberAccount({
           email,
@@ -69,7 +72,14 @@ const SignIn = ({navigation}: {navigation: any}) => {
           enabled: checked,
         }),
       );
+
+      await AsyncStorage.multiSet([
+        ['emailComplet', email],
+        ['passwordComplet', password],
+        ['enabledComplet', String(checked)],
+      ]);
     } else {
+      await AsyncStorage.multiRemove(['emailComplet', 'passwordComplet']);
       dispatch(rememberAccount({email: null, password: null, enabled: false}));
     }
   };
