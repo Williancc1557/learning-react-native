@@ -11,11 +11,11 @@ import StyledInputWithValidator from '../../components/StyledInputWithValidation
 import StyledText from '../../components/StyledText';
 import StyledTitle from '../../components/StyledTitle';
 import {signIn} from '../../services/api/auth';
-import {rememberAccount, updateTokens} from '../../services/userSlice';
+import {rememberAccount, updateTokens} from '../../services/authSlice';
 import {styles} from './styles';
 
 const SignIn = ({navigation}: {navigation: any}) => {
-  const autoComplete = useSelector((state: any) => state.user.rememberAccount);
+  const autoComplete = useSelector((state: any) => state.auth.rememberAccount);
   const [checked, setChecked] = useState(autoComplete.enabled);
   const [email, setEmail] = useState(autoComplete.email || '');
   const [password, setPassword] = useState(autoComplete.password || '');

@@ -11,7 +11,7 @@ import StyledInputWithValidator from '../../components/StyledInputWithValidation
 import StyledText from '../../components/StyledText';
 import StyledTitle from '../../components/StyledTitle';
 import {saveUser} from '../../services/api/auth';
-import {updateTokens} from '../../services/userSlice';
+import {updateTokens} from '../../services/authSlice';
 import {styles} from './styles';
 
 const SignUp = ({navigation}: {navigation: any}) => {

@@ -3,7 +3,7 @@ import SignUp from '../screens/SignUp';
 import Home from '../screens/Home';
 import {useDispatch, useSelector} from 'react-redux';
 import {useEffect} from 'react';
-import {updateTokens} from '../services/userSlice';
+import {updateTokens} from '../services/authSlice';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import React from 'react';
@@ -25,7 +25,7 @@ const NavigationStack = () => {
   });
 
   const store = useSelector((state: any) => state);
-  const {refreshToken} = store.user.tokens;
+  const {refreshToken} = store.auth.tokens;
 
   return (
     <NavigationContainer>
