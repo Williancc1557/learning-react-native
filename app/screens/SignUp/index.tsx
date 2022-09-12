@@ -46,7 +46,7 @@ const SignUp = ({navigation}: {navigation: any}) => {
 
   const submit = async () => {
     if (!checkFields()) {
-      return showError('Please, complete all inputs');
+      return showError('Please, complete all fields');
     }
 
     const {body, statusCode} = await saveUser({
@@ -85,12 +85,11 @@ const SignUp = ({navigation}: {navigation: any}) => {
       <PageContainer style={styles.container}>
         <StyledTitle style={styles.title}>Sign Up</StyledTitle>
         <View style={styles.form}>
-          <StyledInputWithValidator
+          <StyledInput
             value={name}
             placeholder="Name"
             style={styles.input}
             onChangeText={nameChanged => setName(nameChanged)}
-            validate={true}
           />
           <StyledInput
             placeholder="Email"

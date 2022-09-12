@@ -6,8 +6,8 @@ import CheckBoxWithText from '../../components/CheckBoxWithText';
 import ErrorMessage from '../../components/ErrorMessage';
 import PageContainer from '../../components/PageContainer';
 import StyledButton from '../../components/StyledButton';
+import StyledInput from '../../components/StyledInput';
 import StyledInputWithEyes from '../../components/StyledInputWithEyes';
-import StyledInputWithValidator from '../../components/StyledInputWithValidation';
 import StyledText from '../../components/StyledText';
 import StyledTitle from '../../components/StyledTitle';
 import {signIn} from '../../services/api/auth';
@@ -39,7 +39,7 @@ const SignIn = ({navigation}: {navigation: any}) => {
 
   const submit = async () => {
     if (!checkFields()) {
-      return showError('Please, complete all inputs');
+      return showError('Please, complete all fields');
     }
 
     const {body, statusCode} = await signIn({
@@ -78,8 +78,7 @@ const SignIn = ({navigation}: {navigation: any}) => {
     <PageContainer style={styles.container}>
       <StyledTitle style={styles.title}>Sign In</StyledTitle>
       <View style={styles.form}>
-        <StyledInputWithValidator
-          validate={true}
+        <StyledInput
           placeholder="Email"
           style={styles.input}
           value={email}
