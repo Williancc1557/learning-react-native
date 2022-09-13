@@ -13,11 +13,13 @@ const Stack = createNativeStackNavigator();
 const NavigationStack = () => {
   const dispatch = useDispatch();
 
-  React.useMemo(async () => {
-    const refreshToken = await AsyncStorage.getItem('refreshToken');
-    const accessToken = await AsyncStorage.getItem('accessToken');
+  React.useMemo(() => {
+    (async () => {
+      const refreshToken = await AsyncStorage.getItem('refreshToken');
+      const accessToken = await AsyncStorage.getItem('accessToken');
 
-    dispatch(updateTokens({refreshToken, accessToken}));
+      dispatch(updateTokens({refreshToken, accessToken}));
+    })();
   }, [dispatch]);
 
   const store = useSelector((state: any) => state);
@@ -33,18 +35,20 @@ const NavigationStack = () => {
 const Unauthorized = () => {
   const dispatch = useDispatch();
 
-  React.useMemo(async () => {
-    const emailComplet = await AsyncStorage.getItem('emailComplet');
-    const passwordComplet = await AsyncStorage.getItem('passwordComplet');
-    const enabledComplet = await AsyncStorage.getItem('enabledComplet');
+  React.useMemo(() => {
+    (async () => {
+      const emailComplet = await AsyncStorage.getItem('emailComplet');
+      const passwordComplet = await AsyncStorage.getItem('passwordComplet');
+      const enabledComplet = await AsyncStorage.getItem('enabledComplet');
 
-    dispatch(
-      rememberAccount({
-        email: emailComplet,
-        password: passwordComplet,
-        enabled: Boolean(enabledComplet),
-      }),
-    );
+      dispatch(
+        rememberAccount({
+          email: emailComplet,
+          password: passwordComplet,
+          enabled: Boolean(enabledComplet),
+        }),
+      );
+    })();
   }, [dispatch]);
 
   return (

@@ -47,8 +47,6 @@ const SignIn = ({navigation}: {navigation: any}) => {
       password,
     });
 
-    console.log(body);
-
     if (statusCode === 400) {
       return showError("We don't can find this account");
     }
