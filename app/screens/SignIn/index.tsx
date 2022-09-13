@@ -11,7 +11,11 @@ import StyledInputWithEyes from '../../components/StyledInputWithEyes';
 import StyledText from '../../components/StyledText';
 import StyledTitle from '../../components/StyledTitle';
 import {signIn} from '../../services/api/auth';
-import {rememberAccount, updateTokens} from '../../services/authSlice';
+import {
+  rememberAccount,
+  updateAccess,
+  updateTokens,
+} from '../../services/authSlice';
 import {styles} from './styles';
 
 const SignIn = ({navigation}: {navigation: any}) => {
@@ -60,6 +64,7 @@ const SignIn = ({navigation}: {navigation: any}) => {
         refreshToken: body.refreshToken,
       }),
     );
+    dispatch(updateAccess(true));
 
     await AsyncStorage.setItem('refreshToken', body.refreshToken);
     if (checked) {

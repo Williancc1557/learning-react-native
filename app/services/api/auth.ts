@@ -1,19 +1,15 @@
 import axios from 'axios';
-
-export interface SaveUserInput {
-  name: string;
-  email: string;
-  password: string;
-}
-
-export interface SaveUserOutput {
-  statusCode: number;
-  body: {
-    accessToken: string;
-    refreshToken: string;
-    expiresIn: number;
-  };
-}
+import {
+  CreateAccessTokenInput,
+  CreateAccessTokenOutput,
+  GetTokenInfoInput,
+  GetTokenInfoOutput,
+  IsValidAccessTokenInput,
+  SaveUserInput,
+  SaveUserOutput,
+  SignInInput,
+  SignInOutput,
+} from './models';
 
 export const saveUser = async (
   input: SaveUserInput,
@@ -36,33 +32,71 @@ export const saveUser = async (
   }
 };
 
-export interface SignInInput {
-  email: string;
-  password: string;
-}
-
-export interface SignInOutput {
-  statusCode: number;
-  body: {
-    refreshToken: string;
-  };
-}
-
 export const signIn = async (input: SignInInput): Promise<SignInOutput> => {
   try {
-    console.log('executando');
-
     const response = await axios.post(
       'http://127.0.1.1:8080/api/auth/sign-in',
       input,
     );
 
-    console.log(response);
-
     return {
       body: {
         refreshToken: response.data.refreshToken,
       },
+      statusCode: response.status,
+    };
+  } catch (err: any) {
+    return {
+      statusCode: err.response.status,
+      body: err.response.data,
+    };
+  }
+};
+
+export const getTokenInfo = async (
+  input: GetTokenInfoInput,
+): Promise<GetTokenInfoOutput> => {
+  try {
+    const response = await axios.get(
+      'http://127.0.1.1:8080/api/auth/token-info',
+      {
+        headers: {accesstoken: input.accessToken},
+      },
+    );
+
+    return {
+      body: response.data,
+
+      statusCode: response.status,
+    };
+  } catch (err: any) {
+    return {
+      statusCode: err.response.status,
+      body: err.response.data,
+    };
+  }
+};
+
+export const isValidAccessToken = async (
+  input: IsValidAccessTokenInput,
+): Promise<boolean> => {
+  const {statusCode} = await getTokenInfo(input);
+
+  return statusCode === 200;
+};
+
+export const createAccessToken = async (
+  input: CreateAccessTokenInput,
+): Promise<CreateAccessTokenOutput> => {
+  try {
+    const response = await axios.post(
+      'http://127.0.1.1:8080/api/auth/refresh-token',
+      {},
+      {headers: {refreshtoken: input.refreshToken}},
+    );
+
+    return {
+      body: response.data,
       statusCode: response.status,
     };
   } catch (err: any) {

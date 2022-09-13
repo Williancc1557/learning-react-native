@@ -8,6 +8,8 @@ export const authSlice = createSlice({
       refreshToken: null,
     },
 
+    access: false,
+
     rememberAccount: {
       email: null,
       password: null,
@@ -15,16 +17,20 @@ export const authSlice = createSlice({
     },
   },
   reducers: {
-    updateTokens: (state, value) => {
-      state.tokens = {...state.tokens, ...value.payload};
+    updateTokens: (state, {payload}) => {
+      state.tokens = {...state.tokens, ...payload};
     },
 
-    rememberAccount: (state, value) => {
-      state.rememberAccount = {...state.rememberAccount, ...value.payload};
+    rememberAccount: (state, {payload}) => {
+      state.rememberAccount = {...state.rememberAccount, ...payload};
+    },
+
+    updateAccess: (state, {payload}) => {
+      state.access = payload;
     },
   },
 });
 
-export const {updateTokens, rememberAccount} = authSlice.actions;
+export const {updateTokens, rememberAccount, updateAccess} = authSlice.actions;
 
 export default authSlice.reducer;

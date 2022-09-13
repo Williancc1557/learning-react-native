@@ -3,7 +3,7 @@ import React from 'react';
 import {useDispatch} from 'react-redux';
 import PageContainer from '../../components/PageContainer';
 import StyledButton from '../../components/StyledButton';
-import {updateTokens} from '../../services/authSlice';
+import {updateAccess, updateTokens} from '../../services/authSlice';
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -18,6 +18,7 @@ const Home = () => {
               accessToken: null,
             }),
           );
+          dispatch(updateAccess(false));
         }}
         title="Logout"
       />
